@@ -1,6 +1,6 @@
 
 plugins {
-    `java-library`
+    id("java-library")
 }
 
 repositories {
@@ -8,8 +8,12 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":config"))
-    testImplementation("junit:junit:4.+")
+    implementation(project(":analyzer"))
+    implementation(project(":pluginmanager"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
-
+tasks.getByName<Test>("test") {
+    useJUnitPlatform()
+}
