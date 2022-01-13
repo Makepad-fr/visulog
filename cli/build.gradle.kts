@@ -8,6 +8,7 @@ version = "0.0.1"
 
 application.mainClass.set("up.visulog.cli.VisulogCLI")
 
+
 repositories {
     mavenCentral()
 }
@@ -25,6 +26,16 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
+tasks {
+    jar {
+        archiveFileName.set("visulog.jar")
+        from(configurations.compileClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
+
+        manifest {
+            attributes["Main-Class"]= application.mainClass.get()
+        }
+    }
+}
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
