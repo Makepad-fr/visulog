@@ -57,7 +57,7 @@ gradle build
 | [gitlab](./gitlab)| The adapter for the Gitlab API | [TBD] | `0.0.3` |
 | [pluginmanager](./pluginmanager)| Contains the core types for all plugins | [RELEASED] | `0.0.1` |
 | [webgen](./webgen)| Contains all the logic for web based visualisation of the analysis results | [RELEASED] | `0.0.1` |
-
+| [gui](./gui) | Contains the source code of the graphical user interface | [TBD] | `0.1.2` |
 
 ## Roadmap
 
@@ -74,6 +74,7 @@ Features to implement in next releases
 Features will be released once all P1 features are implemented
 
 - [ ] Get commit history Gitlab remote repository without cloning the entire repository
+- [ ] Graphical user interface (GUI) 
 
 ### Low priority (P3)
 Features to release after P2
