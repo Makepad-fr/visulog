@@ -74,7 +74,7 @@ Features to implement in next releases
 Features will be released once all P1 features are implemented
 
 - [ ] Get commit history Gitlab remote repository without cloning the entire repository
-- [ ] Graphical user interface (GUI) 
+- [ ] Graphical user interface (GUI)
 
 ### Low priority (P3)
 Features to release after P2

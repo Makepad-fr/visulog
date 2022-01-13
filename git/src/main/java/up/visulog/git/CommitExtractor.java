@@ -68,6 +68,7 @@ public class CommitExtractor {
 
     /**
      * A commit is a merge commit if it has more than one parent
+     *
      * @param commit The commit to verify
      * @return True if the given commit is a merge commit, false if not
      */
