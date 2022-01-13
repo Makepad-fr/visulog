@@ -1,0 +1,51 @@
+configfilepath: /Users/kaanyagci/Documents/idil/visulog/.concom.yml
+path: /Users/kaanyagci/Documents/idil/visulog
+version: ""
+scopes:
+    - name: analyzer
+      description: All changes related to the analyzer module
+    - name: chartbuilder
+      description: All changes related to the chartbuilder module
+    - name: cli
+      description: All changes related to the CLI module
+    - name: config
+      description: All changes related to the configuration module
+    - name: git
+      description: All changes related to the git module
+    - name: hq
+      description: All changes related to the hq module
+    - name: github
+      description: All changes related to the github module
+    - name: gitlab
+      description: All changes related to the gitlab module
+    - name: pluginmanager
+      description: All changes related to the pluginmanager module
+    - name: webgen
+      description: All changes related to the webgen module
+    - name: readme
+      description: All changes related to the README file
+    - name: docs
+      description: All changes related to the docs folder
+    - name: gradle
+      description: All changes related to the Gradle
+conventions:
+    - name: build
+      description: Changes that affect the build system or external dependencies
+    - name: ci
+      description: Changes to our CI configuration files and scripts
+    - name: docs
+      description: Documentation only changes
+    - name: feat
+      description: A new feature
+    - name: revert
+      description: 'If the commit reverts a previous commit, it should begin with revert: , followed by the header of the reverted commit. In the body it should say: This reverts commit <hash>., where the hash is the SHA of the commit being reverted.'
+    - name: fix
+      description: A bug fix
+    - name: perf
+      description: A code change that improves performance
+    - name: refactor
+      description: A code change that neither fixes a bug nor adds a feature
+    - name: style
+      description: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+    - name: test
+      description: Adding missing tests or correcting existing tests
