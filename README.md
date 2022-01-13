@@ -2,7 +2,7 @@
 
 Tool for analysis and visualization of git logs
 
-## Presentation
+## Description
 
 Visulog is a data visualisation tool lets you create grahics from a given repository's commit history.
 
@@ -14,7 +14,7 @@ Visulog is a data visualisation tool lets you create grahics from a given reposi
 | MacOS (Intel) | | |
 | MacOS (arm) | | |
 | Linux | | |
-| Windows | | 
+| Windows | |
 
 
 ## Features
@@ -33,7 +33,7 @@ It can give analysis based on:
 It can visualise above analysis
 
 - in charts which saved as png files
-- on a web server 
+- on a web server
 
 ## Development
 
@@ -56,7 +56,7 @@ gradle build
 | [github](./github)| The adapter for Github API | [TBD] | `0.0.2` |
 | [gitlab](./gitlab)| The adapter for the Gitlab API | [TBD] | `0.0.3` |
 | [pluginmanager](./pluginmanager)| Contains the core types for all plugins | [RELEASED] | `0.0.1` |
-| [webgen](./webgen)| Contains all the logic for web based visualisation of the analysis results | [RELEASED] | `0.0.1` | 
+| [webgen](./webgen)| Contains all the logic for web based visualisation of the analysis results | [RELEASED] | `0.0.1` |
 
 
 ## Roadmap
@@ -67,6 +67,8 @@ The feature requests triage is done in three priority levels
 Features to implement in next releases
 
 - [ ] Get commit history from a Github remote repository without cloning the entire repository
+- [ ] Get commits from a remote repository with ssh without cloning
+- [ ] Get commits from a remote repository with http without cloning
 
 ### Medium priority (P2)
 Features will be released once all P1 features are implemented

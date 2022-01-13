@@ -1,7 +1,12 @@
 plugins{
     java
-    id("com.diffplug.spotless") version "5.17.1"
+    id("com.diffplug.spotless") version "6.2.0"
 }
+
+repositories {
+    mavenCentral()
+}
+
 spotless {
     format("misc") {
         target("*.gradle", "*.md", ".gitignore")
@@ -15,7 +20,7 @@ spotless {
         // optional: you can specify a specific version and/or switch to AOSP style
         //   and/or reflow long strings (requires at least 1.8)
         //   and/or use custom group artifact (you probably don't need this)
-        googleJavaFormat("1.12.0").aosp().reflowLongStrings().groupArtifact("com.google.googlejavaformat:google-java-format")
+        googleJavaFormat("1.13.0").aosp().reflowLongStrings().groupArtifact("com.google.googlejavaformat:google-java-format")
         licenseHeader ("/*\n\t22015094 - Idil Saglam\n*/")
     }
 }

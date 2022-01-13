@@ -1,8 +1,10 @@
+/*
+	22015094 - Idil Saglam
+*/
 package up.visulog.pluginmanager;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.eclipse.jgit.revwalk.DepthWalk.Commit;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 public abstract class VisulogPlugin implements Plugin {
@@ -17,12 +19,10 @@ public abstract class VisulogPlugin implements Plugin {
         this.commits = commits;
     }
 
-  /**
-   * Creates a visulog plugin with empty set of commits
-   */
-  public VisulogPlugin() {
-    this(new HashSet<>());
-  }
+    /** Creates a visulog plugin with empty set of commits */
+    public VisulogPlugin() {
+        this(new HashSet<>());
+    }
 
     /**
      * Set commits with the given set of commits
@@ -33,5 +33,5 @@ public abstract class VisulogPlugin implements Plugin {
         this.commits.addAll(commits);
     }
 
-  public abstract void run();
+    public abstract void run();
 }
