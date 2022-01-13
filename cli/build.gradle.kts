@@ -19,6 +19,7 @@ dependencies {
     implementation(project(":webgen"))
     implementation(project(":config"))
     implementation(project(":analyzer"))
+    implementation(project(":pluginmanager"))
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
