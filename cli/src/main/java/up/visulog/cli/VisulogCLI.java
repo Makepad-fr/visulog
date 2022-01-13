@@ -70,7 +70,8 @@ public class VisulogCLI implements Callable<Integer> {
 
     @Option(
             names = {"--graphType"},
-            description = "The type of the graphs to create. Valid values: ${COMPLETION-CANDIDATES}",
+            description =
+                    "The type of the graphs to create. Valid values: ${COMPLETION-CANDIDATES}",
             required = false)
     private GraphType[] graphTypes;
 
@@ -93,15 +94,15 @@ public class VisulogCLI implements Callable<Integer> {
 
     @Option(
             names = {"--saveConfig", "--saveConfiguration"},
-            description = "Saves the configuration to the given path."   ,
+            description = "Saves the configuration to the given path.",
             required = false)
     private String configurationFilePathToSave;
-    @Option(
-        names={"--groupBy"},
-        description = "Group logs with given type of group. Valid values: ${COMPLETION-CANDIDATES}"
-    )
-    private GroupBy groupBy;
 
+    @Option(
+            names = {"--groupBy"},
+            description =
+                    "Group logs with given type of group. Valid values: ${COMPLETION-CANDIDATES}")
+    private GroupBy groupBy;
 
     @Override
     public Integer call() throws Exception {

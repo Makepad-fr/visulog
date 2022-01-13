@@ -31,7 +31,7 @@ public class WebGenerator extends AnalyzerPlugin<String> {
                 portNumber,
                 countCommitsPerUser,
                 countMergeCommitsPerUser,
-            groupBy,
+                groupBy,
                 graphTypes);
     }
 

@@ -132,9 +132,21 @@ public class Configuration {
             boolean countMergeCommitsPerUser,
             GroupBy groupBy,
             GraphType[] graphTypes) {
-        this.plugins.put(analyzerPluginType.toString(), switch (analyzerPluginType) {
-            case web ->  new WebGenerator((String) param, countsCommitsPerUser, countMergeCommitsPerUser, groupBy, graphTypes);
-            case chartGenerator -> new ChartBuilder((String) param, countMergeCommitsPerUser, countMergeCommitsPerUser, groupBy, graphTypes);
-        });
+        this.plugins.put(
+                analyzerPluginType.toString(),
+                switch (analyzerPluginType) {
+                    case web -> new WebGenerator(
+                            (String) param,
+                            countsCommitsPerUser,
+                            countMergeCommitsPerUser,
+                            groupBy,
+                            graphTypes);
+                    case chartGenerator -> new ChartBuilder(
+                            (String) param,
+                            countMergeCommitsPerUser,
+                            countMergeCommitsPerUser,
+                            groupBy,
+                            graphTypes);
+                });
     }
 }
