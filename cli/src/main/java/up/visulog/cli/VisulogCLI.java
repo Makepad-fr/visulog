@@ -10,6 +10,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import up.visulog.analyzer.AnalyzerPluginType;
 import up.visulog.analyzer.GraphType;
+import up.visulog.analyzer.GroupBy;
 import up.visulog.config.Configuration;
 import up.visulog.config.Runner;
 
@@ -69,7 +70,7 @@ public class VisulogCLI implements Callable<Integer> {
 
     @Option(
             names = {"--graphType"},
-            description = "The type of the graphs to create",
+            description = "The type of the graphs to create. Valid values: ${COMPLETION-CANDIDATES}",
             required = false)
     private GraphType[] graphTypes;
 
@@ -92,9 +93,15 @@ public class VisulogCLI implements Callable<Integer> {
 
     @Option(
             names = {"--saveConfig", "--saveConfiguration"},
-            description = "Saves the configuration to the given path",
+            description = "Saves the configuration to the given path."   ,
             required = false)
     private String configurationFilePathToSave;
+    @Option(
+        names={"--groupBy"},
+        description = "Group logs with given type of group. Valid values: ${COMPLETION-CANDIDATES}"
+    )
+    private GroupBy groupBy;
+
 
     @Override
     public Integer call() throws Exception {
@@ -114,6 +121,7 @@ public class VisulogCLI implements Callable<Integer> {
                         portNumber,
                         countCommitsPerUser,
                         countMergeCommitsPerUser,
+                        groupBy,
                         graphTypes);
             }
             if (outputPath != null) {
@@ -122,6 +130,7 @@ public class VisulogCLI implements Callable<Integer> {
                         outputPath,
                         countCommitsPerUser,
                         countMergeCommitsPerUser,
+                        groupBy,
                         graphTypes);
             }
             Runner runner = new Runner(configuration);

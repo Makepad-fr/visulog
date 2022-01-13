@@ -15,8 +15,11 @@ import java.util.Map.Entry;
 import java.util.stream.Stream;
 import up.visulog.analyzer.AnalyzerPluginType;
 import up.visulog.analyzer.GraphType;
+import up.visulog.analyzer.GroupBy;
+import up.visulog.chartbuilder.ChartBuilder;
 import up.visulog.git.CommitExtractor;
 import up.visulog.pluginmanager.VisulogPlugin;
+import up.visulog.webgen.WebGenerator;
 
 public class Configuration {
     private final Map<String, VisulogPlugin> plugins;
@@ -119,6 +122,7 @@ public class Configuration {
      * @param countsCommitsPerUser A boolean indicating that if commits per user will be counted
      * @param countMergeCommitsPerUser A boolean indicating that if merge commits per user will be
      *     counted
+     * @param groupBy The type of groups to create
      * @param graphTypes The type of the graph to generate
      */
     public <T> void addAnalyzerPlugin(
@@ -126,5 +130,11 @@ public class Configuration {
             T param,
             boolean countsCommitsPerUser,
             boolean countMergeCommitsPerUser,
-            GraphType[] graphTypes) {}
+            GroupBy groupBy,
+            GraphType[] graphTypes) {
+        this.plugins.put(analyzerPluginType.toString(), switch (analyzerPluginType) {
+            case web ->  new WebGenerator((String) param, countsCommitsPerUser, countMergeCommitsPerUser, groupBy, graphTypes);
+            case chartGenerator -> new ChartBuilder((String) param, countMergeCommitsPerUser, countMergeCommitsPerUser, groupBy, graphTypes);
+        });
+    }
 }

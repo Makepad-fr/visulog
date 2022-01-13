@@ -13,6 +13,8 @@ dependencies {
     implementation(project(":pluginmanager"))
     implementation(project(":analyzer"))
     implementation(project(":git"))
+    implementation(project(":webgen"))
+    implementation(project(":chartbuilder"))
     implementation("org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r")
 
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")

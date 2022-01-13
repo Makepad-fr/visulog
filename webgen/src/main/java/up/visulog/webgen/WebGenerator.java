@@ -6,6 +6,7 @@ package up.visulog.webgen;
 import up.visulog.analyzer.AnalyzerPlugin;
 import up.visulog.analyzer.AnalyzerPluginType;
 import up.visulog.analyzer.GraphType;
+import up.visulog.analyzer.GroupBy;
 
 public class WebGenerator extends AnalyzerPlugin<String> {
 
@@ -16,18 +17,21 @@ public class WebGenerator extends AnalyzerPlugin<String> {
      * @param countCommitsPerUser A boolean indicating that if we will count commits per user
      * @param countMergeCommitsPerUser A boolean indicating that if merge commits per user will be
      *     counted
+     * @param groupBy The type of groups to use while analyzing
      * @param graphTypes The type of the graphs to generate
      */
     public WebGenerator(
             String portNumber,
             boolean countCommitsPerUser,
             boolean countMergeCommitsPerUser,
+            GroupBy groupBy,
             GraphType[] graphTypes) {
         super(
                 AnalyzerPluginType.web,
                 portNumber,
                 countCommitsPerUser,
                 countMergeCommitsPerUser,
+            groupBy,
                 graphTypes);
     }
 

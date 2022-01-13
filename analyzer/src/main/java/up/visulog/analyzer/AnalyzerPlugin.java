@@ -20,6 +20,7 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
      *     commits per user
      * @param countMergeCommitsPerUser A boolean indicating that if graphs will contain the count of
      *     merge commits per user
+     * @param groupBy The type of groups used for analyzing
      * @param graphType The type of the graph to generate
      */
     protected AnalyzerPlugin(
@@ -27,6 +28,7 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
             T param,
             boolean countCommitsPerUser,
             boolean countMergeCommitsPerUser,
+            GroupBy groupBy,
             GraphType[] graphType) {
         this.type = type;
         this.param = param;
