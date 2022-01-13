@@ -28,6 +28,8 @@ scopes:
       description: All changes related to the docs folder
     - name: gradle
       description: All changes related to the Gradle
+    - name: gui
+      description: All changes related to the gui module
 conventions:
     - name: build
       description: Changes that affect the build system or external dependencies
