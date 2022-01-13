@@ -66,6 +66,15 @@ public class CommitExtractor {
         return result;
     }
 
+    /**
+     * A commit is a merge commit if it has more than one parent
+     * @param commit The commit to verify
+     * @return True if the given commit is a merge commit, false if not
+     */
+    public static boolean isMergeCommit(RevCommit commit) {
+        return commit.getParents().length > 1;
+    }
+
     private class VisulogRevFilter extends RevFilter {
 
         /**
