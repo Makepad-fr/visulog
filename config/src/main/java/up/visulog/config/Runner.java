@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import up.visulog.pluginmanager.Plugin;
+import up.visulog.pluginmanager.VisulogPlugin;
 
 public class Runner {
     private final Configuration configuration;
@@ -73,7 +74,7 @@ public class Runner {
         this.configuration
                 .getAvailablePlugins(pattern)
                 .forEach(
-                        (Entry<String, Plugin> pluginEntry) -> {
+                        (Entry<String, VisulogPlugin> pluginEntry) -> {
                             executor.execute(pluginEntry.getValue());
                         });
         // This will make the executor accept no new threads
@@ -110,7 +111,7 @@ public class Runner {
         this.configuration
                 .getAvailablePlugins(pattern)
                 .forEach(
-                        (Entry<String, Plugin> pluginEntry) -> {
+                        (Entry<String, VisulogPlugin> pluginEntry) -> {
                             pluginEntry.getValue().run();
                         });
     }
