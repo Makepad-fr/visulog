@@ -37,6 +37,6 @@ public class ChartBuilder extends AnalyzerPlugin<String> {
 
     @Override
     public void run() {
-        // TODO: COMPLETE WITH GRAPH GENERATION
+        BarChartSample.main(null);
     }
 }
