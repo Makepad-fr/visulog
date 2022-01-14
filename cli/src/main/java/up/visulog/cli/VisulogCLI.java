@@ -126,15 +126,14 @@ public class VisulogCLI implements Callable<Integer> {
                         groupBy,
                         graphTypes);
             }
-            if (outputPath != null) {
-                configuration.addAnalyzerPlugin(
-                        AnalyzerPluginType.chartGenerator,
-                        outputPath,
-                        countCommitsPerUser,
-                        countMergeCommitsPerUser,
-                        groupBy,
-                        graphTypes);
-            }
+            configuration.addAnalyzerPlugin(
+                    AnalyzerPluginType.chartGenerator,
+                    outputPath,
+                    countCommitsPerUser,
+                    countMergeCommitsPerUser,
+                    groupBy,
+                    graphTypes);
+
             // TODO: Add GUI plugin here
             Runner runner = new Runner(configuration);
             runner.run();
