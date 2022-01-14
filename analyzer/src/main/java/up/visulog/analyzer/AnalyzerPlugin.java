@@ -7,7 +7,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -55,13 +54,12 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
         this.groupBy = groupBy;
     }
 
-    /**
-     * Initializes the hashmap of commits per user.
-     */
+    /** Initializes the hashmap of commits per user. */
     protected void initUserCommits() {
-        for (RevCommit commit: super.commits) {
+        for (RevCommit commit : super.commits) {
             PersonIdent author = commit.getAuthorIdent();
-            // If the commits per user does not contains any entry for the current commit author, initialize an empty hashset for this author
+            // If the commits per user does not contains any entry for the current commit author,
+            // initialize an empty hashset for this author
             this.commitsPerUser.computeIfAbsent(author, k -> new HashSet<>());
             // Add the commit to the hashset of the current user's commits
             this.commitsPerUser.get(author).add(commit);
@@ -70,11 +68,13 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
 
     /**
      * Return a map contains number of commits of each user
-        * @return A map containing the number of commit per user
+     *
+     * @return A map containing the number of commit per user
      */
-    protected Map<PersonIdent, Number> getCommitsPerUserCount () {
+    protected Map<PersonIdent, Number> getCommitsPerUserCount() {
         Map<PersonIdent, Number> result = new HashMap<>();
-        for (Entry<PersonIdent, Set<RevCommit>> commitPerUserEntry: this.commitsPerUser.entrySet()) {
+        for (Entry<PersonIdent, Set<RevCommit>> commitPerUserEntry :
+                this.commitsPerUser.entrySet()) {
             result.put(commitPerUserEntry.getKey(), commitPerUserEntry.getValue().size());
         }
         return result;
@@ -82,34 +82,41 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
 
     /**
      * Get the number of merge commits per user
+     *
      * @return A map contains the number of merge commits per user
      */
     protected Map<PersonIdent, Number> getMergeCommitPerUser() {
         Map<PersonIdent, Number> result = new HashMap<>();
-        for (Entry<PersonIdent, Set<RevCommit>> commitsPerUserEntry: this.commitsPerUser.entrySet()) {
-            result.put(commitsPerUserEntry.getKey(), commitsPerUserEntry.getValue().stream().filter(
-                CommitExtractor::isMergeCommit).count());
+        for (Entry<PersonIdent, Set<RevCommit>> commitsPerUserEntry :
+                this.commitsPerUser.entrySet()) {
+            result.put(
+                    commitsPerUserEntry.getKey(),
+                    commitsPerUserEntry.getValue().stream()
+                            .filter(CommitExtractor::isMergeCommit)
+                            .count());
         }
         return result;
     }
 
-
     /**
      * Get grouped commits following the groupBy type
+     *
      * @return A map containing grouped commits per each date commits by user
      */
     protected Map<ZonedDateTime, Map<PersonIdent, Set<RevCommit>>> getGroupedCommits() {
         Map<ZonedDateTime, Map<PersonIdent, Set<RevCommit>>> result = new TreeMap<>();
-         // Per each commit
-        for (RevCommit commit: super.commits) {
-            final ZonedDateTime commitZdt = ZonedDateTime.ofInstant(commit.getAuthorIdent().getWhen().toInstant(), ZoneId.systemDefault());
+        // Per each commit
+        for (RevCommit commit : super.commits) {
+            final ZonedDateTime commitZdt =
+                    ZonedDateTime.ofInstant(
+                            commit.getAuthorIdent().getWhen().toInstant(), ZoneId.systemDefault());
             // Verify if there's a key in the result map to fit in
-            Set<ZonedDateTime> targetKeys = result.keySet().stream().filter((ZonedDateTime zdt) -> AnalyzerPlugin.same(
-                    zdt,
-                    commitZdt,
-                    this.groupBy
-                )
-            ).collect(Collectors.toSet());
+            Set<ZonedDateTime> targetKeys =
+                    result.keySet().stream()
+                            .filter(
+                                    (ZonedDateTime zdt) ->
+                                            AnalyzerPlugin.same(zdt, commitZdt, this.groupBy))
+                            .collect(Collectors.toSet());
             if (targetKeys.size() == 0) {
                 // If there's not target key initialize with an empty hashmap
                 result.put(commitZdt, this.initAnalyzeResult());
@@ -121,7 +128,9 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
     }
 
     /**
-     * Verify if two dates are same day. Two dates are same day, if and only if they are same year and same month on the same timezone
+     * Verify if two dates are same day. Two dates are same day, if and only if they are same year
+     * and same month on the same timezone
+     *
      * @param date1 First date
      * @param date2 Second date
      * @param group The type of group to verify
@@ -132,23 +141,28 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
 
         return switch (group) {
             case Hour -> date1.getHour() == date2.getHour() && same(date1, date2, GroupBy.Day);
-            case Day -> date1.getDayOfMonth() == date2.getDayOfMonth() && same(date1, date2, GroupBy.Week);
-            case Week ->
-                (date1.get(weekFields.weekOfWeekBasedYear()) == date2.get(weekFields.weekOfWeekBasedYear())) && same(date1, date2, GroupBy.Month);
-            case Month -> date1.getMonth() == date2.getMonth() && same(date1,date2,GroupBy.Quarter);
-            case Quarter -> date1.get(IsoFields.QUARTER_OF_YEAR) == date2.get(IsoFields.QUARTER_OF_YEAR) && same(date1, date2, GroupBy.Year);
+            case Day -> date1.getDayOfMonth() == date2.getDayOfMonth()
+                    && same(date1, date2, GroupBy.Week);
+            case Week -> (date1.get(weekFields.weekOfWeekBasedYear())
+                            == date2.get(weekFields.weekOfWeekBasedYear()))
+                    && same(date1, date2, GroupBy.Month);
+            case Month -> date1.getMonth() == date2.getMonth()
+                    && same(date1, date2, GroupBy.Quarter);
+            case Quarter -> date1.get(IsoFields.QUARTER_OF_YEAR)
+                            == date2.get(IsoFields.QUARTER_OF_YEAR)
+                    && same(date1, date2, GroupBy.Year);
             case Year -> date1.getYear() == date2.getYear();
         };
     }
 
-
     /**
      * Initialize a hashmap with all existing authors and with empty sets
+     *
      * @return The hashmap generated with all existing authors and empty sets for each
      */
     private Map<PersonIdent, Set<RevCommit>> initAnalyzeResult() {
         Map<PersonIdent, Set<RevCommit>> result = new HashMap<>();
-        for (PersonIdent author: this.commitsPerUser.keySet()) {
+        for (PersonIdent author : this.commitsPerUser.keySet()) {
             result.put(author, new HashSet<>());
         }
         return result;
