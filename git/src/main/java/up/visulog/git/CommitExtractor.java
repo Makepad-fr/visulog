@@ -4,6 +4,7 @@
 package up.visulog.git;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -40,6 +41,7 @@ public class CommitExtractor {
     public CommitExtractor(
             String[] authors, Date startDate, Date endDate, String path, String branchName)
             throws IOException {
+        path = Path.of(path, ".git").toAbsolutePath().toString();
         this.repository = new FileRepository(path);
         this.git = new Git(this.repository);
         this.authors = authors;
