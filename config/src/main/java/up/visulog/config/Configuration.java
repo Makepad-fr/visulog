@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
+import up.visulog.analyzer.AnalyzerPlugin;
 import up.visulog.analyzer.AnalyzerPluginType;
 import up.visulog.analyzer.GraphType;
 import up.visulog.analyzer.GroupBy;
@@ -131,9 +132,9 @@ public class Configuration {
             boolean countsCommitsPerUser,
             boolean countMergeCommitsPerUser,
             GroupBy groupBy,
-            GraphType[] graphTypes) {
-        this.plugins.put(
-                analyzerPluginType.toString(),
+            GraphType[] graphTypes)
+            throws IOException {
+        AnalyzerPlugin<String> p =
                 switch (analyzerPluginType) {
                     case web -> new WebGenerator(
                             (String) param,
@@ -147,6 +148,9 @@ public class Configuration {
                             countMergeCommitsPerUser,
                             groupBy,
                             graphTypes);
-                });
+                };
+        p.setCommits(extractor.extract());
+
+        this.plugins.put(analyzerPluginType.toString(), p);
     }
 }
