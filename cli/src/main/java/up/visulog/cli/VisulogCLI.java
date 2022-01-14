@@ -3,6 +3,7 @@
 */
 package up.visulog.cli;
 
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
@@ -15,7 +16,7 @@ import up.visulog.config.Configuration;
 import up.visulog.config.Runner;
 
 @Command(
-        name = "checksum",
+        name = "visulog",
         mixinStandardHelpOptions = true,
         version = "1.0.0",
         description = "Analyse commits of a git repository")
@@ -52,7 +53,7 @@ public class VisulogCLI implements Callable<Integer> {
             description = "Input repository path",
             type = String.class,
             required = false)
-    private String inputPath;
+    private String inputPath = Paths.get("").toAbsolutePath().toString();
 
     @Option(
             names = {"--countCommit"},
@@ -73,7 +74,7 @@ public class VisulogCLI implements Callable<Integer> {
             description =
                     "The type of the graphs to create. Valid values: ${COMPLETION-CANDIDATES}",
             required = false)
-    private GraphType[] graphTypes;
+    private GraphType[] graphTypes = GraphType.values();
 
     @Option(
             names = {"-o", "--output"},
@@ -107,7 +108,6 @@ public class VisulogCLI implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         Configuration configuration;
-
         if (configurationPath == null) {
             configuration =
                     new Configuration(
