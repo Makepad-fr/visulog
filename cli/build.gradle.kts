@@ -32,7 +32,12 @@ dependencies {
 
 tasks {
     jar {
+        dependsOn(":chartbuilder:jar", ":webgen:jar", ":config:jar", ":analyzer:jar", ":pluginmanager:jar")
         archiveFileName.set("visulog.jar")
+        duplicatesStrategy=DuplicatesStrategy.EXCLUDE
+        exclude("META-INF/*.RSA", "META-INF/*.SF","META-INF/*.DSA")
+
+        from(configurations.runtimeClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
         from(configurations.compileClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
 
         manifest {

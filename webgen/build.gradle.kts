@@ -14,6 +14,16 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
+tasks {
+    jar {
+        exclude("META-INF/*.RSA", "META-INF/*.SF","META-INF/*.DSA")
+
+        dependsOn(":analyzer:jar", ":pluginmanager:jar")
+        duplicatesStrategy=DuplicatesStrategy.EXCLUDE
+        from(configurations.compileClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
+    }
+}
+
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }

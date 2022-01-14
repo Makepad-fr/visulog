@@ -23,6 +23,17 @@ dependencies {
 
 }
 
+tasks {
+
+    jar {
+        exclude("META-INF/*.RSA", "META-INF/*.SF","META-INF/*.DSA")
+
+        dependsOn(":webgen:jar", ":chartbuilder:jar", ":analyzer:jar", ":git:jar")
+        duplicatesStrategy=DuplicatesStrategy.EXCLUDE
+        from(configurations.compileClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
+    }
+}
+
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
