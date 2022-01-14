@@ -40,7 +40,7 @@ public class VisulogCLI implements Callable<Integer> {
             description = "End date to analyze commits",
             type = Date.class,
             required = false)
-    private Date endDate;
+    private Date endDate = new Date();
 
     @Option(
             names = {"--branch"},
