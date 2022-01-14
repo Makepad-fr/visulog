@@ -104,7 +104,7 @@ public class VisulogCLI implements Callable<Integer> {
             names = {"--groupBy"},
             description =
                     "Group logs with given type of group. Valid values: ${COMPLETION-CANDIDATES}")
-    private GroupBy groupBy;
+    private GroupBy groupBy = GroupBy.Day;
 
     @Override
     public Integer call() throws Exception {
