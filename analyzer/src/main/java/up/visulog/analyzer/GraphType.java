@@ -3,4 +3,6 @@
 */
 package up.visulog.analyzer;
 
-public enum GraphType {}
+public enum GraphType {
+    BarChart;
+}
