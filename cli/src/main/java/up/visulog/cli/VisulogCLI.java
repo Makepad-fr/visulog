@@ -26,7 +26,7 @@ public class VisulogCLI implements Callable<Integer> {
             names = {"-a", "--author"},
             description = "Extractor author to filter with",
             required = false)
-    private String[] authors;
+    private String[] authors = new String[0];
 
     @Option(
             names = {"--from"},
@@ -134,9 +134,11 @@ public class VisulogCLI implements Callable<Integer> {
                         groupBy,
                         graphTypes);
             }
+            // TODO: Add GUI plugin here
             Runner runner = new Runner(configuration);
             runner.run();
         }
+        // TODO: Load from configuration path
         return 0;
     }
 
