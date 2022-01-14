@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine.Option;
 import up.visulog.analyzer.AnalyzerPluginType;
 import up.visulog.analyzer.GraphType;
@@ -137,8 +138,16 @@ public class VisulogCLI implements Callable<Integer> {
             // TODO: Add GUI plugin here
             Runner runner = new Runner(configuration);
             runner.run();
+            return 0;
         }
         // TODO: Load from configuration path
+        String str = Ansi.AUTO.string("@|bold,yellow INFO:|@");
+        System.out.printf(
+                """
+                %s Loading configuration file is not yet implemented.
+                You can check our roadmap from https://github.com/Makepad-fr/visulog#roadmap
+                """,
+                str);
         return 0;
     }
 
