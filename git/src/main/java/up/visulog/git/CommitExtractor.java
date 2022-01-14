@@ -47,7 +47,11 @@ public class CommitExtractor {
         this.authors = authors;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.head = this.repository.exactRef(String.format("refs/heads/%s", branchName));
+        this.head =
+                this.repository.exactRef(
+                        (branchName == null)
+                                ? this.repository.getFullBranch()
+                                : String.format("refs/heads/%s", branchName));
     }
 
     /**
@@ -117,13 +121,14 @@ public class CommitExtractor {
                 return false;
             }
 
-            if (Arrays.stream(CommitExtractor.this.authors)
-                    .noneMatch(
-                            (String author) -> {
-                                PersonIdent commitAuthor = commit.getAuthorIdent();
-                                return author.equals(commitAuthor.getEmailAddress())
-                                        || author.equals(commitAuthor.getName());
-                            })) {
+            if (CommitExtractor.this.authors.length > 0
+                    && Arrays.stream(CommitExtractor.this.authors)
+                            .noneMatch(
+                                    (String author) -> {
+                                        PersonIdent commitAuthor = commit.getAuthorIdent();
+                                        return author.equals(commitAuthor.getEmailAddress())
+                                                || author.equals(commitAuthor.getName());
+                                    })) {
                 // If the current commit author's email or name does not match with authors array,
                 // do not include the current commit
                 return false;
