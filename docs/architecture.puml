@@ -1,0 +1,55 @@
+@startuml
+
+
+cloud Github as githubapi
+cloud Gitlab as gitlabapi
+actor User as user
+
+node "Local machine" {
+  component Analyzer as analyzer
+  component ChartBuilder as chartbuilder
+  component CLI as cli
+  component Config as config
+  component Git as git
+  component Github as github
+  component Gitlab as gitlab
+  component GUI as gui
+  component Mercurial as hq
+  component PluginManager as pluginmanager
+  component WebGeneretor as webgen
+  storage "File system" as fs
+}
+
+
+analyzer -> git
+analyzer -> pluginmanager
+
+chartbuilder -> analyzer
+chartbuilder -> pluginmanager
+
+cli -> chartbuilder
+cli -> webgen
+cli -> config
+cli -> analyzer
+cli -> pluginmanager
+
+config -> webgen
+config -> chartbuilder
+config -> analyzer
+config -> git
+
+git -> fs
+
+github -> githubapi
+gitlab -> gitlabapi
+
+gui -> chartbuilder
+
+hq -> fs
+
+webgen -> chartbuilder
+webgen -> analyzer
+webgen -> git
+
+user -> cli
+@enduml
