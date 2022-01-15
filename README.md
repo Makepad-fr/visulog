@@ -69,6 +69,9 @@ Features to implement in next releases
 - [ ] Get commit history from a Github remote repository without cloning the entire repository
 - [ ] Get commits from a remote repository with ssh without cloning
 - [ ] Get commits from a remote repository with http without cloning
+- [ ] Introduce a new module called `vcs` which will be parent of `git` and `hq` modules.
+- [ ] Solve dependency problem: Modules importing another module can not access to the dependencies of the imported one.
+- [ ] Introduce CLI only features
 
 ### Medium priority (P2)
 Features will be released once all P1 features are implemented
