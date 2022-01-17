@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Stream;
+import org.eclipse.jgit.revwalk.RevCommit;
 import up.visulog.analyzer.AnalyzerPlugin;
 import up.visulog.analyzer.AnalyzerPluginType;
 import up.visulog.analyzer.GraphType;
@@ -25,6 +27,7 @@ import up.visulog.webgen.WebGenerator;
 public class Configuration {
     private final Map<String, VisulogPlugin> plugins;
     private final CommitExtractor extractor;
+    private final Set<RevCommit> commits;
     // private final boolean createWebServer, countTotalCommits, countCommitsPerUser,
     // countsMergeCommitsPerUser, countsMergeCommits;
 
@@ -52,6 +55,7 @@ public class Configuration {
             p.getValue().setCommits(extractor.extract());
             this.plugins.put(p.getKey(), p.getValue());
         }
+        this.commits = this.extractor.extract();
     }
 
     /**
@@ -149,8 +153,8 @@ public class Configuration {
                             groupBy,
                             graphTypes);
                 };
-        p.setCommits(extractor.extract());
-
+        // Add extracted commits to the plugin
+        p.setCommits(this.commits);
         this.plugins.put(analyzerPluginType.toString(), p);
     }
 }
