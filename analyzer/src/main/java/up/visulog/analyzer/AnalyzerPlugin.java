@@ -9,6 +9,7 @@ import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -27,6 +28,8 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
     protected final GraphType[] graphTypes;
     protected Map<PersonIdent, Set<RevCommit>> commitsPerUser = new HashMap<>();
     protected final GroupBy groupBy;
+    protected Map<ZonedDateTime, Map<PersonIdent, Set<RevCommit>>> groupedCommits;
+
     /**
      * Create a new analyzer plugin with given parameters
      *
@@ -56,9 +59,10 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
 
     /** Initializes the hashmap of commits per user. */
     protected void initUserCommits() {
+        System.out.println("Init user commits method called");
         for (RevCommit commit : super.commits) {
             PersonIdent author = commit.getAuthorIdent();
-            // If the commits per user does not contains any entry for the current commit author,
+            // If the commits per user does not contain any entry for the current commit author,
             // initialize an empty hashset for this author
             this.commitsPerUser.computeIfAbsent(author, k -> new HashSet<>());
             // Add the commit to the hashset of the current user's commits
@@ -73,6 +77,10 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
      */
     protected Map<PersonIdent, Number> getCommitsPerUserCount() {
         Map<PersonIdent, Number> result = new HashMap<>();
+        if (this.commitsPerUser.size() == 0) {
+            System.out.println("Commits per user command was empty");
+            this.initUserCommits();
+        }
         for (Entry<PersonIdent, Set<RevCommit>> commitPerUserEntry :
                 this.commitsPerUser.entrySet()) {
             result.put(commitPerUserEntry.getKey(), commitPerUserEntry.getValue().size());
@@ -87,6 +95,10 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
      */
     protected Map<PersonIdent, Number> getMergeCommitPerUser() {
         Map<PersonIdent, Number> result = new HashMap<>();
+        if (this.commitsPerUser.size() == 0) {
+            System.out.println("Commits per user command was empty");
+            this.initUserCommits();
+        }
         for (Entry<PersonIdent, Set<RevCommit>> commitsPerUserEntry :
                 this.commitsPerUser.entrySet()) {
             result.put(
@@ -98,13 +110,9 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
         return result;
     }
 
-    /**
-     * Get grouped commits following the groupBy type
-     *
-     * @return A map containing grouped commits per each date commits by user
-     */
-    protected Map<ZonedDateTime, Map<PersonIdent, Set<RevCommit>>> getGroupedCommits() {
-        Map<ZonedDateTime, Map<PersonIdent, Set<RevCommit>>> result = new TreeMap<>();
+    /** Set grouped commits following the groupBy type */
+    public void setGroupedCommits() {
+        Map<ZonedDateTime, Map<PersonIdent, Set<RevCommit>>> result = new TreeMap<>q();
         // Per each commit
         for (RevCommit commit : super.commits) {
             final ZonedDateTime commitZdt =
@@ -117,14 +125,22 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
                                     (ZonedDateTime zdt) ->
                                             AnalyzerPlugin.same(zdt, commitZdt, this.groupBy))
                             .collect(Collectors.toSet());
+            PersonIdent authorIdent = commit.getAuthorIdent();
             if (targetKeys.size() == 0) {
+                System.out.println("CommitZdt initialised");
                 // If there's not target key initialize with an empty hashmap
                 result.put(commitZdt, this.initAnalyzeResult());
+                // Put the commit in the hashmap
+                System.out.printf("Author name %s to add commit\n", authorIdent.getName());
+                result.get(commitZdt).get(authorIdent).add(commit);
+                continue;
             }
-            // Put the commit in the hashmap
-            result.get(commitZdt).get(commit.getAuthorIdent()).add(commit);
+            // Create the iterator for targetKeys
+            Iterator<ZonedDateTime> it = targetKeys.iterator();
+            // Add to the first possible target key
+            result.get(it.next()).get(authorIdent).add(commit);
         }
-        return result;
+        this.groupedCommits = result;
     }
 
     /**
@@ -162,8 +178,12 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
      */
     private Map<PersonIdent, Set<RevCommit>> initAnalyzeResult() {
         Map<PersonIdent, Set<RevCommit>> result = new HashMap<>();
+        if (this.commitsPerUser.size() == 0) {
+            System.out.println("Commits per user command was empty");
+            this.initUserCommits();
+        }
         for (PersonIdent author : this.commitsPerUser.keySet()) {
-            result.put(author, new HashSet<>());
+            result.computeIfAbsent(author, k -> new HashSet<>());
         }
         return result;
     }
