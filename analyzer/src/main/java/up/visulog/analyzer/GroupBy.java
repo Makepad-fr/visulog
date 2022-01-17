@@ -3,6 +3,8 @@
 */
 package up.visulog.analyzer;
 
+import java.time.ZonedDateTime;
+import java.time.temporal.IsoFields;
 import java.util.Locale;
 
 public enum GroupBy {
@@ -12,6 +14,29 @@ public enum GroupBy {
     Month,
     Quarter,
     Year;
+
+    /**
+     * Get the representation of the given ZonedDateTime in the current groupBy configuration
+     *
+     * @param zdt The ZonedDateTime object to format
+     * @return The String representation of the given ZonedDateTime instance in given GroupBy
+     *     configuration
+     */
+    public String formatDateTime(ZonedDateTime zdt) {
+        return switch (this) {
+            case Year -> "" + zdt.getYear();
+            case Quarter -> String.format(
+                    "Q%d of %d", zdt.get(IsoFields.QUARTER_OF_YEAR), zdt.getYear());
+            case Month -> String.format("%s %d", zdt.getMonth(), zdt.getYear());
+            case Week -> String.format(
+                    "Week %d of %d", zdt.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR), zdt.getYear());
+            case Day -> String.format(
+                    "%d/%d/%d", zdt.getMonthValue(), zdt.getDayOfMonth(), zdt.getYear());
+            case Hour -> String.format(
+                    "%d %d/%d/%d",
+                    zdt.getHour(), zdt.getDayOfMonth(), zdt.getMonthValue(), zdt.getYear());
+        };
+    }
 
     /**
      * Converts the given String to the GroupBy value if possible
@@ -30,6 +55,18 @@ public enum GroupBy {
             case "year" -> Year;
             default -> throw new IllegalArgumentException(
                     String.format("%s is not a vlid groupBy type", string));
+        };
+    }
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case Hour -> "hour";
+            case Day -> "day";
+            case Week -> "week";
+            case Month -> "month";
+            case Quarter -> "quarter";
+            case Year -> "year";
         };
     }
 }

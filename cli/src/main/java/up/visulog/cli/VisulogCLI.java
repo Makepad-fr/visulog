@@ -135,6 +135,13 @@ public class VisulogCLI implements Callable<Integer> {
                     countMergeCommitsPerUser,
                     groupBy,
                     graphTypes);
+            configuration.addAnalyzerPlugin(
+                    AnalyzerPluginType.stdout,
+                    null,
+                    countCommitsPerUser,
+                    countMergeCommitsPerUser,
+                    groupBy,
+                    null);
 
             // TODO: Add GUI plugin here
             Runner runner = new Runner(configuration);

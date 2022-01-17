@@ -22,6 +22,7 @@ import up.visulog.analyzer.GroupBy;
 import up.visulog.chartbuilder.ChartBuilder;
 import up.visulog.git.CommitExtractor;
 import up.visulog.pluginmanager.VisulogPlugin;
+import up.visulog.tablebuilder.TableBuilder;
 import up.visulog.webgen.WebGenerator;
 
 public class Configuration {
@@ -138,6 +139,14 @@ public class Configuration {
             GroupBy groupBy,
             GraphType[] graphTypes)
             throws IOException {
+        if (analyzerPluginType == AnalyzerPluginType.stdout) {
+            AnalyzerPlugin<Void> p =
+                    new TableBuilder(countsCommitsPerUser, countMergeCommitsPerUser, groupBy);
+            p.setCommits(this.commits);
+            p.setGroupedCommits();
+            this.plugins.put(analyzerPluginType.toString(), p);
+            return;
+        }
         AnalyzerPlugin<String> p =
                 switch (analyzerPluginType) {
                     case web -> new WebGenerator(
