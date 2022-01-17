@@ -17,26 +17,27 @@ node "Local machine" {
   component Mercurial as hq
   component PluginManager as pluginmanager
   component WebGeneretor as webgen
+  component TableBuilder as tablebuilder
+  component CSVBuilder as csvbuilder
   storage "File system" as fs
 }
 
-
-analyzer -> git
-analyzer -> pluginmanager
-
-chartbuilder -> analyzer
-chartbuilder -> pluginmanager
-
-cli -> chartbuilder
-cli -> webgen
 cli -> config
-cli -> analyzer
-cli -> pluginmanager
 
 config -> webgen
 config -> chartbuilder
 config -> analyzer
-config -> git
+config -> tablebuilder
+config -> csvbuilder
+
+tablebuilder -> analyzer
+analyzer -> pluginmanager
+
+pluginmanager -> git
+
+chartbuilder -> analyzer
+
+
 
 git -> fs
 
@@ -48,8 +49,6 @@ gui -> chartbuilder
 hq -> fs
 
 webgen -> chartbuilder
-webgen -> analyzer
-webgen -> git
 
 user -> cli
 @enduml
