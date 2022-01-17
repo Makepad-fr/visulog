@@ -30,6 +30,10 @@ scopes:
       description: All changes related to the Gradle
     - name: gui
       description: All changes related to the gui module
+    - name: csvbuilder
+      description: All changed related to the csvbuilder module
+    - name: tablebuilder
+      description: All changes related to the tablebuilder module
 conventions:
     - name: build
       description: Changes that affect the build system or external dependencies
