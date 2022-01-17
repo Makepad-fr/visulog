@@ -74,7 +74,8 @@ public class VisulogCLI implements Callable<Integer> {
             names = {"--graphType"},
             description =
                     "The type of the graphs to create. Valid values: ${COMPLETION-CANDIDATES}",
-            required = false)
+            required = false,
+            converter = GraphTypeConverter.class)
     private GraphType[] graphTypes = GraphType.values();
 
     @Option(
