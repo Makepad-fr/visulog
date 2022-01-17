@@ -103,7 +103,8 @@ public class VisulogCLI implements Callable<Integer> {
     @Option(
             names = {"--groupBy"},
             description =
-                    "Group logs with given type of group. Valid values: ${COMPLETION-CANDIDATES}")
+                    "Group logs with given type of group. Valid values: ${COMPLETION-CANDIDATES}",
+            converter = GroupByConverter.class)
     private GroupBy groupBy = GroupBy.Day;
 
     @Override
