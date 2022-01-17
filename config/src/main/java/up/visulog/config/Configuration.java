@@ -155,6 +155,7 @@ public class Configuration {
                 };
         // Add extracted commits to the plugin
         p.setCommits(this.commits);
+        p.setGroupedCommits();
         this.plugins.put(analyzerPluginType.toString(), p);
     }
 }
