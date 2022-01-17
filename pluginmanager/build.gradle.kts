@@ -10,13 +10,14 @@ repositories {
 }
 
 dependencies {
-    implementation("org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    api(project(":git"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 tasks {
     jar {
+        dependsOn(":git:jar")
         exclude("META-INF/*.RSA", "META-INF/*.SF","META-INF/*.DSA")
 
         duplicatesStrategy=DuplicatesStrategy.EXCLUDE

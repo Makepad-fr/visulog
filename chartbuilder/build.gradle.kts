@@ -12,12 +12,9 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":analyzer"))
-    implementation(project(":pluginmanager"))
-    implementation("org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    api(project(":analyzer"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-
 }
 
 tasks.getByName<Test>("test") {

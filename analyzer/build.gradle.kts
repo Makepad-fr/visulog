@@ -10,11 +10,9 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":pluginmanager"))
-    implementation(project(":git"))
-    implementation("org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r")
+    api(project(":pluginmanager"))
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
@@ -22,7 +20,7 @@ tasks {
     jar {
         exclude("META-INF/*.RSA", "META-INF/*.SF","META-INF/*.DSA")
 
-        dependsOn(":pluginmanager:jar", ":git:jar")
+        dependsOn(":pluginmanager:jar")
         duplicatesStrategy=DuplicatesStrategy.EXCLUDE
         from(configurations.compileClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
     }
