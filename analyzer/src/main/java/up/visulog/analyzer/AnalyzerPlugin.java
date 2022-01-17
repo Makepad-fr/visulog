@@ -112,7 +112,7 @@ public abstract class AnalyzerPlugin<T> extends VisulogPlugin {
 
     /** Set grouped commits following the groupBy type */
     public void setGroupedCommits() {
-        Map<ZonedDateTime, Map<PersonIdent, Set<RevCommit>>> result = new TreeMap<>q();
+        Map<ZonedDateTime, Map<PersonIdent, Set<RevCommit>>> result = new TreeMap<>();
         // Per each commit
         for (RevCommit commit : super.commits) {
             final ZonedDateTime commitZdt =
